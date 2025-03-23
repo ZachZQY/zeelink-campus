@@ -17,10 +17,10 @@ export function middleware(request: NextRequest) {
   if (isProtectedPath) {
     // 获取userId cookie
     const userId = request.cookies.get('userId')?.value;
-    
+    console.log('userId', userId);
     // 如果没有userId，重定向到登录页面
     if (!userId) {
-      const loginUrl = new URL('/login', request.url);
+      const loginUrl = new URL('/login', request.nextUrl.origin);
       // 添加原始URL作为重定向参数，登录后可以返回
       loginUrl.searchParams.set('redirect', pathname);
       return NextResponse.redirect(loginUrl);

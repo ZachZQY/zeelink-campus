@@ -101,7 +101,7 @@ export default function Login() {
       }
 
       toast.success('登录成功');
-      router.push(redirectPath);
+      router.replace(redirectPath||"/");
     } catch (error: any) {
       toast.error(error.message || '登录失败');
     } finally {
