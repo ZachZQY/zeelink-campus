@@ -1,0 +1,41 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+// 需要登录才能访问的路径
+const protectedPaths = [
+  '/posts/publish',
+];
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  // 检查当前路径是否需要登录
+  const isProtectedPath = protectedPaths.some(path => 
+    pathname.startsWith(path)
+  );
+  
+  if (isProtectedPath) {
+    // 获取userId cookie
+    const userId = request.cookies.get('userId')?.value;
+    
+    // 如果没有userId，重定向到登录页面
+    if (!userId) {
+      const loginUrl = new URL('/login', request.url);
+      // 添加原始URL作为重定向参数，登录后可以返回
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+  
+  return NextResponse.next();
+}
+
+// 配置中间件匹配的路径
+export const config = {
+  matcher: [
+    /*
+     * 匹配所有需要保护的路径
+     */
+    '/posts/publish/:path*',
+  ],
+};
