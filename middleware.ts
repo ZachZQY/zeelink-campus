@@ -38,5 +38,6 @@ export const config = {
      * 匹配所有需要保护的路径
      */
     '/posts/publish/:path*',
+    '/posts/publish'
   ],
 };

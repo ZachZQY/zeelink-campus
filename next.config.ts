@@ -2,7 +2,14 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["file.weweknow.com"],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'file.weweknow.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
   experimental: {
     serverActions: {
