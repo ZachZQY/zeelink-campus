@@ -22,8 +22,8 @@ export function middleware(request: NextRequest) {
     if (!userId) {
       const loginUrl = new URL('/login', request.nextUrl.origin);
       // 添加原始URL作为重定向参数，登录后可以返回
-      loginUrl.searchParams.set('redirect', pathname);
-      console.log('loginUrl：', loginUrl);
+      //loginUrl.searchParams.set('redirect', pathname);
+      console.log('origin：', request.nextUrl.origin);
       return NextResponse.redirect(loginUrl);
     }
   }
