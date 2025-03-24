@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 // 需要登录才能访问的路径
 const protectedPaths = [
   '/posts/publish',
+  '/posts'
 ];
 
 export function middleware(request: NextRequest) {
@@ -13,7 +14,7 @@ export function middleware(request: NextRequest) {
   const isProtectedPath = protectedPaths.some(path => 
     pathname.startsWith(path)
   );
-  
+  console.log('isProtectedPath：', isProtectedPath);
   if (isProtectedPath) {
     // 获取userId cookie
     const userId = request.cookies.get('userId')?.value;
@@ -38,6 +39,6 @@ export const config = {
      * 匹配所有需要保护的路径
      */
     '/posts/publish/:path*',
-    '/posts/publish'
+    '/posts/:path*',
   ],
 };
